@@ -162,7 +162,7 @@ if df_raw is not None:
         # 営業収益テーブル
         st.markdown("#### 営業収益一覧（百万円）")
         revenue_table = pivot_revenue.T
-        st.dataframe(revenue_table.style.format("{:,.0f}"), use_container_width=True)
+        st.dataframe(revenue_table.style.format("{:,.0f}"), width='stretch')
         
         html_rev = get_html_report(revenue_table, "地域別営業収益の推移", fig1)
         st.download_button("📥 HTMLでダウンロード（チャート＋テーブル）", html_rev, "地域別営業収益レポート.html", "text/html", key="rev_html")
@@ -190,7 +190,7 @@ if df_raw is not None:
         # 営業利益テーブル
         st.markdown("#### 営業利益一覧（百万円）")
         profit_table = pivot_profit.T
-        st.dataframe(profit_table.style.format("{:,.0f}"), use_container_width=True)
+        st.dataframe(profit_table.style.format("{:,.0f}"), width='stretch')
         
         html_profit = get_html_report(profit_table, "地域別営業利益の推移", fig2)
         st.download_button("📥 HTMLでダウンロード（チャート＋テーブル）", html_profit, "地域別営業利益レポート.html", "text/html", key="profit_html")
@@ -221,7 +221,7 @@ if df_raw is not None:
         st.markdown("#### 営業収益構成比一覧（%）")
         crosstab_rev_comp = pivot_rev_comp.T
         st.dataframe(crosstab_rev_comp.style.format("{:.1f}").bar(subset=crosstab_rev_comp.columns, color='skyblue', vmin=0), 
-                     use_container_width=True)
+                     width='stretch')
         
         html_comp1 = get_html_report(crosstab_rev_comp, "営業収益構成比の推移", fig3)
         st.download_button("📥 HTMLでダウンロード（チャート＋テーブル）", html_comp1, "営業収益構成比レポート.html", "text/html", key="comp_rev_html")
@@ -247,7 +247,7 @@ if df_raw is not None:
         
         st.markdown("#### 営業利益構成比一覧（%）")
         crosstab_profit_comp = pivot_profit_comp.T
-        st.dataframe(crosstab_profit_comp.style.format("{:.1f}"), use_container_width=True)
+        st.dataframe(crosstab_profit_comp.style.format("{:.1f}"), width='stretch')
         
         html_comp2 = get_html_report(crosstab_profit_comp, "営業利益構成比の推移", fig4)
         st.download_button("📥 HTMLでダウンロード（チャート＋テーブル）", html_comp2, "営業利益構成比レポート.html", "text/html", key="comp_profit_html")
@@ -278,7 +278,7 @@ if df_raw is not None:
         pivot_margin = df_raw.pivot_table(
             index='決算年度', columns='地域', values='営業収益営業利益率', aggfunc='sum'
         ).reindex(raw_years).reindex(columns=region_list).T
-        st.dataframe(pivot_margin.style.format("{:.1f}"), use_container_width=True)
+        st.dataframe(pivot_margin.style.format("{:.1f}"), width='stretch')
         
         html_margin = get_html_report(pivot_margin, "地域別営業利益率の推移", fig5)
         st.download_button("📥 HTMLでダウンロード（チャート＋テーブル）", html_margin, "営業利益率レポート.html", "text/html", key="margin_html")
@@ -325,7 +325,7 @@ if df_raw is not None:
             growth_df['地域'], growth_df['決算年度'], 
             values=growth_df['営業収益成長率'], aggfunc='sum'
         ).reindex(columns=raw_years).reindex([r for r in region_list if r in growth_df['地域'].unique()])
-        st.dataframe(crosstab_growth.style.format("{:.2f}"), use_container_width=True)
+        st.dataframe(crosstab_growth.style.format("{:.2f}"), width='stretch')
         
         html_growth = get_html_report(crosstab_growth, f"地域別営業収益成長率（{base_year}基準）", fig6)
         st.download_button("📥 HTMLでダウンロード（チャート＋テーブル）", html_growth, "成長率レポート.html", "text/html", key="growth_html")
@@ -372,7 +372,7 @@ if df_raw is not None:
             yoy_df['地域'], yoy_df['決算年度'], 
             values=yoy_df['対前年成長率'], aggfunc='sum'
         ).reindex(columns=raw_years).reindex(region_list)
-        st.dataframe(crosstab_yoy.style.format("{:.1f}"), use_container_width=True)
+        st.dataframe(crosstab_yoy.style.format("{:.1f}"), width='stretch')
         
         html_yoy = get_html_report(crosstab_yoy, "地域別営業収益 対前年成長率", fig7)
         st.download_button("📥 HTMLでダウンロード（チャート＋テーブル）", html_yoy, "対前年成長率レポート.html", "text/html", key="yoy_html")
@@ -456,7 +456,7 @@ if df_raw is not None:
                 '営業収益対前年成長率': '{:.1f}',
                 '営業利益率': '{:.1f}'
             }
-            st.dataframe(display_df.style.format(format_dict), use_container_width=True)
+            st.dataframe(display_df.style.format(format_dict), width='stretch')
             
             # 構成比テーブル（横持ち・バーチャート風スタイル）
             st.markdown("#### 構成比推移")
@@ -465,7 +465,7 @@ if df_raw is not None:
             
             st.dataframe(
                 comp_df.style.format("{:.1f}%").bar(subset=comp_df.columns, color='skyblue', vmin=0),
-                use_container_width=True
+                width='stretch'
             )
             
             html_content = get_html_report(display_df, f"{selected_region} - 業績推移", fig8)
